@@ -11,6 +11,7 @@ var imagemin = require('gulp-imagemin');
 var less = require('gulp-less');
 var plumber = require('gulp-plumber');
 var rename = require("gulp-rename");
+var rev = require('gulp-rev-append');
 var spritesmith = require("gulp-spritesmith");
 
 gulp.task('html', function() {
@@ -19,8 +20,9 @@ gulp.task('html', function() {
     	.pipe(includer())
     	.pipe(replace({
             js: 'js/all.js',
-			css: 'css/style.css'
+			css: 'css/style.css?rev=@@hash'
     	}))
+        .pipe(rev())
         .pipe(plumber.stop())
         .pipe(gulp.dest('build/'))
         .pipe(browserSync.stream());
